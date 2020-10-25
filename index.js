@@ -1,23 +1,14 @@
-const express = require('express');
-var app = express();
-const {Storage} = require('@google-cloud/storage');
-const storage = new Storage();
+const app = require('./app');
+const fileUploadRouter = require('./controllers/files');
 
-app.get("/health",(req,res)=>{
-
-    const result = await storage.getBuckets();
-    const [buckets] = result;
-
-    buckets.forEach((bucket) => {
-        console.log(bucket.name);
-    })
-
+app.get("/health",async (req,res)=>{
     res.status(200)
     .json({
         message:"Up and running"
     })
 });
 
+app.use('/api/upload',fileUploadRouter);
 
 
 const server = app.listen(8080,()=>{
