@@ -9,7 +9,7 @@ const uploadFiles =   (files, bucketName) => {
                 let filesArray = files[file];
                 for (f in filesArray){
                     console.log(filesArray[f]);
-                    let fileName = await fileRepository.addFile(files[file], bucketName);
+                    let fileName = await fileRepository.addFile(filesArray[f], bucketName);
                     fileName = GOOGLE_BUCKET_URL +bucketName + "/" + fileName;
                     response[filesArray[f].name] = fileName;
                 }
