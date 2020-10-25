@@ -6,9 +6,14 @@ const uploadFiles =   (files, bucketName) => {
     const promise = new Promise(async (resolve, reject) => {
         try {
             for (file in files) {
-                let fileName = await fileRepository.addFile(files[file], bucketName);
-                fileName = GOOGLE_BUCKET_URL +bucketName + "/" + fileName;
-                response[file] = fileName;
+                let filesArray = files[file];
+                for (f in filesArray){
+                    console.log(filesArray[f]);
+                    let fileName = await fileRepository.addFile(files[file], bucketName);
+                    fileName = GOOGLE_BUCKET_URL +bucketName + "/" + fileName;
+                    response[filesArray[f].name] = fileName;
+                }
+                
             }
             resolve(response);
         }

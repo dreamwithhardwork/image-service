@@ -4,6 +4,7 @@ const fileOrchestrator = require('../util/fileUploader');
 const {BUCKET_NAME} = require('../constants/constants');
 
 route.post("/",(req,res)=>{
+    console.log("tet")
    fileOrchestrator.uploadFiles(req.files,BUCKET_NAME)
    .then((response)=>{
        res.status(200).send(response);
