@@ -20,7 +20,7 @@ const uploadFiles =   (files, bucketName) => {
             else{
                         let fileName = await fileRepository.addFile(files.files, bucketName);
                         fileName = GOOGLE_BUCKET_URL +bucketName + "/" + fileName;
-                        response[filesArray[f].name] = fileName;
+                        response[files.files.name] = fileName;
             }
             
             resolve(response);
