@@ -31,7 +31,9 @@ const addFile = async (file, bucketName) => {
     var buffer = file.data;
     var bufferStream = stream.PassThrough();
     bufferStream.end(buffer);
-    let fileName = "main/"+uuidGenerator() + ".png";
+
+    let mimetype = file.mimetype;
+    let fileName = "main/"+uuidGenerator()+"." + mimetype.replace("image/","");
     const bucketFile = bucket.file(fileName);
     const promise = await upload(bufferStream,fileName,bucketFile);
     console.warn(fileName);
