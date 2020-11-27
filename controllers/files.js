@@ -4,7 +4,8 @@ const fileOrchestrator = require('../util/fileUploader');
 const {BUCKET_NAME} = require('../constants/constants');
 
 route.post("/",(req,res)=>{
-   fileOrchestrator.uploadFiles(req.files,BUCKET_NAME)
+    let body = req.body;
+   fileOrchestrator.uploadFiles(req.files,BUCKET_NAME,body)
    .then((response)=>{
        res.status(200).send(response);
    })

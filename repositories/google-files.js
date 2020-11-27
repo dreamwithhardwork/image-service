@@ -26,15 +26,17 @@ const upload = (bufferStream,fileName,bucketFile)=>{
     return promise;
 }
 
-const addFile = async (file, bucketName) => {
+const addFile = async (file, bucketName, body) => {
     let bucket = await bucketRepo.getBucket(bucketName);
     var buffer = file.data;
     var bufferStream = stream.PassThrough();
     bufferStream.end(buffer);
 
     let mimetype = file.mimetype;
-    let fileName = "main/"+uuidGenerator()+"." + mimetype.replace("image/","");
+    let filePath = body.filePath===undefined?"main/":body.filePath;
+    let fileName = body.fileName===undefined?filePath+uuidGenerator():filePath+body.fileName+"." + mimetype.replace("image/","");
     const bucketFile = bucket.file(fileName);
+    //bucket.delete()
     const promise = await upload(bufferStream,fileName,bucketFile);
     console.warn(fileName);
     bucket.file(fileName).makePublic();

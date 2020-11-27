@@ -1,7 +1,7 @@
 const fileRepository = require('../repositories/google-files');
 const {GOOGLE_BUCKET_URL} = require('../constants/constants');
 
-const uploadFiles =   (files, bucketName) => {
+const uploadFiles =   (files, bucketName,body) => {
     const response = {};
     const promise = new Promise(async (resolve, reject) => {
         try {
@@ -10,7 +10,7 @@ const uploadFiles =   (files, bucketName) => {
                     let filesArray = files[file];
                     for (f in filesArray){
                         console.log(filesArray[f]);
-                        let fileName = await fileRepository.addFile(filesArray[f], bucketName);
+                        let fileName = await fileRepository.addFile(filesArray[f], bucketName,body);
                         fileName = GOOGLE_BUCKET_URL +bucketName + "/" + fileName;
                         response[filesArray[f].name] = fileName;
                     }
@@ -18,7 +18,7 @@ const uploadFiles =   (files, bucketName) => {
                 }
             }
             else{
-                        let fileName = await fileRepository.addFile(files.files, bucketName);
+                        let fileName = await fileRepository.addFile(files.files, bucketName,body);
                         fileName = GOOGLE_BUCKET_URL +bucketName + "/" + fileName;
                         response[files.files.name] = fileName;
             }
